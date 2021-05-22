@@ -14,6 +14,7 @@ spec:
       labels:
         app: eureka
     spec:
+      nodeSelector: type=app
       containers:
       - name: eureka
         image: karku/discovery:1.0
