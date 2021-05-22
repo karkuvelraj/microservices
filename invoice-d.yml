@@ -14,7 +14,8 @@ spec:
       labels:
         app: invoice
     spec:
-      nodeSelector: type=app
+      nodeSelector:
+       type: app
       containers:
       - name: invoice
         image: karku/invoice:1.0

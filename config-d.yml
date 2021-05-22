@@ -14,7 +14,8 @@ spec:
       labels:
         app: config
     spec:
-      nodeSelector: type=app
+      nodeSelector:
+       type: app
       containers:
       - name: config
         image: karku/config:1.0
