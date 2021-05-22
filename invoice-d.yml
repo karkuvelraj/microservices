@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: invoice
+  labels:
+    app: invoice
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: invoice
+  template:
+    metadata:
+      labels:
+        app: invoice
+    spec:
+      containers:
+      - name: invoice
+        image: karku/invoice:1.0
+        ports:
+        - containerPort: 4444
+        env:
+         - name: "SPRING_PROFILES_ACTIVE"
+           value: "docker"
+        command: ["java"]
+        args: ["-jar","-Dspring.datasource.url=jdbc:mysql://mysql:3306/","-Dspring.datasource.username=mysql","-Dspring.datasource.password=password","/app.jar"]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: invoice
+spec:
+  selector:
+    app: invoice
+  ports:
+    - name: http
+      port: 4444
+      targetPort: 4444
