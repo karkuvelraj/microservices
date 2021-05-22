@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config
+  labels:
+    app: config
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config
+  template:
+    metadata:
+      labels:
+        app: config
+    spec:
+      containers:
+      - name: config
+        image: karku/config:1.0
+        ports:
+        - containerPort: 5555
+        env:
+         - name: "SPRING_PROFILES_ACTIVE"
+           value: "docker"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config
+spec:
+  selector:
+    app: config
+  ports:
+    - name: http
+      port: 5555
+      targetPort: 5555
