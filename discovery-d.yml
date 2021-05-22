@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: discovery
+  labels:
+    app: eureka
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: eureka
+  template:
+    metadata:
+      labels:
+        app: eureka
+    spec:
+      containers:
+      - name: eureka
+        image: karku/discovery:1.0
+        ports:
+        - containerPort: 1111
+        env:
+         - name: "SPRING_PROFILES_ACTIVE"
+           value: "docker"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: eureka
+spec:
+  selector:
+    app: eureka
+  ports:
+    - name: http
+      port: 1111
+      targetPort: 1111
