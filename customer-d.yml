@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: customer
+  labels:
+    app: customer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: customer
+  template:
+    metadata:
+      labels:
+        app: customer
+    spec:
+      nodeSelector:
+       type: app
+      containers:
+      - name: customer
+        image: karku/customer:1.0
+        ports:
+        - containerPort: 2222
+        env:
+         - name: "SPRING_PROFILES_ACTIVE"
+           value: "docker"
+        command: ["java"]
+        args: ["-jar","-Dspring.datasource.url=jdbc:mysql://mysql:3306/","-Dspring.datasource.username=root","-Dspring.datasource.password=password","/app.jar"]
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: customer
+spec:
+  selector:
+    app: customer
+  ports:
+    - name: http
+      port: 2222
+      targetPort: 2222
