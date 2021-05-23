@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: zuul
+  labels:
+    app: zuul
+spec:
+  replicas: 1
+  selector:
+   matchLabels:
+    app: zuul
+  template:
+   metadata:
+    labels:
+     app: zuul
+   spec:
+    nodeSelector:
+      type: app
+    containers:
+      - name: zuul
+        image: karku/zuul:1.0
+        ports:
+          - containerPort: 1101
+        env:
+          - name: "SPRING_ACTIVE_PROFILES"
+            value: "docker"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: zuul
+spec:
+  selector:
+    app: zuul
+  ports:
+    - name: http
+      targetPort: 1101
+      port: 1101
+  type: NodePort
