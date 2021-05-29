@@ -29,7 +29,7 @@ spec:
         ports:
           - containerPort: 1101
         env:
-          - name: "SPRING_ACTIVE_PROFILES"
+          - name: "SPRING_PROFILES_ACTIVE"
             value: "docker"
         command: ["java"]
         args: ["-jar","-Dmanagement.port=1102","-Deureka.client.serviceUrl.defaultZone=http://eureka:1111/eureka","/app.jar"]
