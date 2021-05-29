@@ -47,4 +47,5 @@ spec:
     - name: http
       targetPort: 1101
       port: 1101
+      nodePort: 31101
   type: NodePort
