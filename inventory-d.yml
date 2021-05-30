@@ -32,7 +32,7 @@ spec:
          - name: "SPRING_PROFILES_ACTIVE"
            value: "docker"
         command: ["java"]
-        args: ["-jar","-Dspring.datasource.url=jdbc:mysql://mysql:3306/microservices_prod/","-Dspring.datasource.username=root","-Dspring.datasource.password=password","/app.jar"]
+        args: ["-jar","-Dspring.datasource.url=jdbc:mysql://mysql:3306/microservices_prod","-Dspring.datasource.username=root","-Dspring.datasource.password=password","/app.jar"]
 
 ---
 apiVersion: v1
