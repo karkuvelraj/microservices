@@ -1,14 +1,24 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress
+  name: ingress-gate
   annotations:
+    kubernetes.io/ingress.class: "nginx"
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
-  rules:
-  - http:
+ defaultBackend:
+         service:
+              name: php
+              port:
+                 number: 80
+ rules:
+  - host: karkuvel.com 
+    http:
       paths:
       - path: /eureka
+        pathType: Prefix
         backend:
-          serviceName: eureka
-          servicePort: 1111
+           service:
+             name: php
+             port:
+                number: 80
