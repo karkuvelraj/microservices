@@ -8,17 +8,45 @@ metadata:
 spec:
  defaultBackend:
          service:
-              name: php
+              name: zuul
               port:
-                 number: 80
+                 number: 1101
  rules:
   - host: karkuvel.com 
     http:
       paths:
-      - path: /eureka
-        pathType: Prefix
+      - path: /
+        pathType: Exact
         backend:
            service:
-             name: php
+             name: zuul
              port:
-                number: 80
+                number: 1101
+      - path: /eureka
+        pathType: Exact
+        backend:
+          service:
+            name: eureka
+            port:
+              number: 1111
+      - path: /customer
+        pathType: Exact
+        backend:
+          service:
+            name: customer-service
+            port:
+              number: 2222
+      - path: /invoice
+        pathType: Exact
+        backend:
+          service:
+            name: invoice-service
+            port:
+              number: 4444
+      - path: /inventory
+        pathType: Exact
+        backend:
+          service:
+            name: inventory-service
+            port:
+              number: 3333
